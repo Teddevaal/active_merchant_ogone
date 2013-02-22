@@ -58,14 +58,12 @@ module ActiveMerchant #:nodoc:
           # Line Items (AfterPay)
           def after_pay_lineitems(items = [])
             items.each_with_index do |line, index|
-              item_id = index+1
-              item_id = "0#{item_id}" if item_id < 10
-              add_field("ITEMID#{item_id}", line[:id])
-              add_field("ITEMNAME#{item_id}", line[:name])
-              add_field("ITEMPRICE#{item_id}", line[:price])
-              add_field("ITEMQUANT#{item_id}", line[:quantity])
-              add_field("ITEMVATCODE#{item_id}", line[:vat_code])
-              add_field("TAXINCLUDED#{item_id}", line[:tax_included])
+              add_field("ITEMID#{index+1}", line[:id])
+              add_field("ITEMNAME#{index+1}", line[:name])
+              add_field("ITEMPRICE#{index+1}", line[:price])
+              add_field("ITEMQUANT#{index+1}", line[:quantity])
+              add_field("ITEMVATCODE#{index+1}", line[:vat_code])
+              add_field("TAXINCLUDED#{index+1}", line[:tax_included])
             end
           end
           
