@@ -42,9 +42,12 @@ module ActiveMerchant #:nodoc:
         def self.outbound_message_signature(fields, signature=nil)
           signature ||= self.outbound_signature
           datastring = fields.select {|k, v| !v.blank? }.
-                              sort_by {|k, v| k.upcase }.
+                              sort_by {|k, v| k.scan(/\D+|\d+/).map { |x| x =~ /\d/ ? x.to_i : x } }.map { |k,v| k.upcase }.
                               collect{|key, value| "#{key.upcase}=#{value}#{signature}"}.join
                               
+
+          #sort_by {|k, v| k.upcase }.
+
           Digest::SHA1.hexdigest(datastring).upcase
         end
         
